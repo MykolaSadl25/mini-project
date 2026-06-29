@@ -1,0 +1,25 @@
+a {
+  text-decoration: none;
+}
+
+address {
+  font-style: normal;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+img {
+  width: 100%;
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+h1, h2, h3, p {
+  margin: 0;
+}
+/*# sourceMappingURL=mini-project.008b0dfe.css.map */
