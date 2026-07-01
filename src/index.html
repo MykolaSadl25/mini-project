@@ -13,9 +13,23 @@
     />
     <link rel="stylesheet" href="./css/reset.css" />
     <link rel="stylesheet" href="./css/style.css" />
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"
+/>
   </head>
   <body>
-    <h1>Mini project</h1>
+  <div class="container">
+      <form class="search-form" id="search-form">
+  <input
+    type="text"
+    name="query"
+    autocomplete="off"
+    placeholder="Search images..."
+  />
+  <button type="submit" class="submit">Submit</button>
+</form>
+<ul class="gallery"></ul>
+<div class="element"></div>
+  </div>
     <script type="module" src="./app.js"></script>
   </body>
 </html>
