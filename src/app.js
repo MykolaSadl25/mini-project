@@ -1,3 +1,5 @@
+import * as basicLightbox from 'basiclightbox';
+import "basiclightbox/dist/basicLightbox.min.css";
 const URL = "https://pixabay.com/api/";
 const API_KEY = "55978698-0d602613e63391cce9d7defd1";
 
@@ -8,6 +10,7 @@ const limit = 12;
 let page = 1
 let search = ""
 
+let instance = null;
 
 async function getImages(search,page) {
   const res = await fetch(`${URL}?key=${API_KEY}&q=${search}&image_type=photo&page=${page}&per_page=${limit}`)
@@ -19,14 +22,14 @@ formRef.addEventListener("submit",async (e)=>{
     e.preventDefault()
     search = e.currentTarget.elements.query.value;
     const res = await getImages(search,page)
-    createItems(res.hitsn)
+    createItems(res.hits)
     
 })
 
 function createItems(array) {
   const item = array.map(({tags,webformatURL,largeImageURL,likes,views,comments,downloads,}) => {
       return `<li class="photo-card">
-  <img src="${webformatURL}" alt="${tags}" />
+  <img src="${webformatURL}" alt="${tags}" data-src="${largeImageURL}"/>
   <div class="stats">
     <p class="stats-item">
       <i class="material-icons">thumb_up</i>
@@ -63,3 +66,34 @@ const observer = new IntersectionObserver((entry)=>{
 })
 
 observer.observe(endPoint)
+
+listRef.addEventListener("click",(e)=>{
+ 
+  if (e.target.nodeName !=="IMG") {
+   return;
+  }
+  const largeImage = e.target.dataset.src;
+  instance = basicLightbox.create(`
+    <div class="modal">
+       <img src="${largeImage}" alt="#"/>
+    </div>
+`)
+
+instance.show()
+
+  if (instance) {
+  window.addEventListener("keydown",closeModal)
+}
+
+})
+
+if (!instance) {
+  window.removeEventListener("keydown",closeModal)
+}
+
+function closeModal(e) {
+  if (e.code === "Escape") {
+    instance.close()
+    instance=null;
+  }
+}
